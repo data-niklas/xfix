@@ -2,7 +2,7 @@
 .SUFFIXES:
 CC     = cc
 LIBS = x11
-CFLAGS = -Wall $(shell pkg-config --cflags $(LIBS)) -g
+CFLAGS = -Wall $(shell pkg-config --cflags $(LIBS))
 LDLIBS = $(shell pkg-config --libs $(LIBS))
 LDFLAGS = 
 
@@ -11,7 +11,7 @@ run: clean build
 	./window
 
 build: xfix bstring window
-	$(CC) $(LDFLAGS) -o window window.o bstring.o xfix.o $(LDLIBS)
+	$(CC) $(LDFLAGS) -o window window.o bstrlib.o xfix.o $(LDLIBS)
 window:
 	$(CC) -c $(CFLAGS) window.c
 xfix:
@@ -19,4 +19,4 @@ xfix:
 bstring:
 	$(CC) -c $(CFLAGS) ../../lib/bstrlib.c
 clean:
-	rm -f xfix.o window.o window
+	rm -f xfix.o window.o bstrlib.o window
