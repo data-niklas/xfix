@@ -1,0 +1,21 @@
+{
+    "files.associations": {
+        "array": "cpp",
+        "chrono": "cpp",
+        "compare": "cpp",
+        "functional": "cpp",
+        "istream": "cpp",
+        "ostream": "cpp",
+        "ranges": "cpp",
+        "ratio": "cpp",
+        "tuple": "cpp",
+        "type_traits": "cpp",
+        "utility": "cpp",
+        "variant": "cpp",
+        "cstdlib": "c",
+        "algorithm": "c",
+        "*.tcc": "c",
+        "random": "c",
+        "numeric": "c"
+    }
+}

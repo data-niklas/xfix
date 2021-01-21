@@ -2,7 +2,7 @@
 .SUFFIXES:
 CC     = cc
 LIBS = x11
-CFLAGS = -Wall $(shell pkg-config --cflags $(LIBS))
+CFLAGS = -Wall $(shell pkg-config --cflags $(LIBS)) -g
 LDLIBS = $(shell pkg-config --libs $(LIBS))
 LDFLAGS = 
 
