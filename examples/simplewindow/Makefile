@@ -1,8 +1,12 @@
 .POSIX:
 .SUFFIXES:
+# Xinerama, comment to disable
+XINERAMALIB = xinerama
+XINERAMAFLAG = -DXINERAMA
+
 CC     = cc
-LIBS = x11
-CFLAGS = -Wall $(shell pkg-config --cflags $(LIBS)) -g
+LIBS = x11 appindicator-0.1 ${XINERAMALIB}
+CFLAGS = -Wall $(shell pkg-config --cflags $(LIBS)) ${XINERAMAFLAG}
 LDLIBS = $(shell pkg-config --libs $(LIBS))
 LDFLAGS = 
 
