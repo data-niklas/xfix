@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
 {
 
     xfix_display display;
-    xfix_init_display(&display);
+    xfix_init_display(&display, NULL);
 
     xfix_window window;
     xfix_init_rgba_window(&display, &window, 1920, 70, 1, 50);

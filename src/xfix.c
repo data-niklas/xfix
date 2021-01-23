@@ -1,3 +1,5 @@
+#include <stdlib.h>
+
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
 #include <X11/Xatom.h>
@@ -58,19 +60,36 @@ void xfix_sync(xfix_display *display)
     XSync(display->display, 0);
 }
 
-void xfix_fill_display(xfix_display *display)
+int xfix_init_display(xfix_display *display, char* name)
 {
+    display->display = XOpenDisplay(name);
     display->root = XRootWindow(display->display, XDefaultScreen(display->display));
-}
-void xfix_init_display(xfix_display *display)
-{
-    display->display = XOpenDisplay(NULL);
-    xfix_fill_display(display);
-}
-void xfix_init_display_by_name(xfix_display *display, bstring name)
-{
-    display->display = XOpenDisplay(name->data);
-    xfix_fill_display(display);
+
+#ifdef XINERAMA
+    if (XineramaIsActive(display->display)) {
+        XineramaScreenInfo *xinerama_screens = XineramaQueryScreens(display->display, &display->num_screens);
+
+        display->screens = malloc(sizeof(xfix_screen) * display->num_screens);
+
+        for (int i = 0; i < display->num_screens; i++) {
+            display->screens[i].width = xinerama_screens[i].width;
+            display->screens[i].height = xinerama_screens[i].height; 
+            display->screens[i].x = xinerama_screens[i].x_org;
+            display->screens[i].y = xinerama_screens[i].y_org;
+        }
+    }
+#else
+    display->num_screens = 1;
+    display->screens = malloc(sizeof(xfix_screen));
+
+    Screen *screen = ScreenOfDisplay(display->display, DefaultScreen(display->display));
+    display->screens[0].width = screen->width;
+    display->screens[0].height = screen->height; 
+    display->screens[0].x = display->screens[0].y = 0;
+
+#endif
+
+    return 1; // error handling, lol
 }
 void xfix_free_display(xfix_display *display)
 {
