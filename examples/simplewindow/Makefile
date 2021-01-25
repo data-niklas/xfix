@@ -5,8 +5,8 @@ XINERAMALIB = xinerama
 XINERAMAFLAG = -DXINERAMA
 
 CC     = cc
-LIBS = x11 appindicator-0.1 ${XINERAMALIB}
-CFLAGS = -Wall $(shell pkg-config --cflags $(LIBS)) ${XINERAMAFLAG}
+LIBS = x11 imlib2 appindicator-0.1 ${XINERAMALIB}
+CFLAGS = -Wall $(shell pkg-config --cflags $(LIBS)) ${XINERAMAFLAG} -g
 LDLIBS = $(shell pkg-config --libs $(LIBS))
 LDFLAGS = 
 
