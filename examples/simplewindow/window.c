@@ -5,12 +5,11 @@
 #include <stdlib.h>
 #include <Imlib2.h>
 
-
 void msleep(unsigned int millis)
 {
     usleep(millis * 1000);
 }
-
+/*
 int main(int argc, char *argv[])
 {
 
@@ -73,6 +72,39 @@ int main(int argc, char *argv[])
     }
     end:
     msleep(2000);
+    xfix_free_window(&display, &window);
+    xfix_free_display(&display);
+    return 0;
+}*/
+
+int main(int argc, char *argv[])
+{
+    xfix_display display;
+    xfix_init_display(&display, NULL);
+
+    xfix_window window;
+    xfix_init_rgba_window(&display, &window, 1920, 0, 3840, 2160);
+    xfix_set_undecorated(&display, &window, False);
+    xfix_set_rgba_background(&display, &window, 0xFF000066);
+    xfix_imlib_set_display(&display);
+    xfix_imlib_set_window(&window);
+
+
+    xfix_show(&display, &window);
+    xfix_update(&display);
+            Imlib_Image icon = imlib_load_image("/home/niklas/Downloads/pixil-frame-0.png");
+    imlib_context_set_image(icon);
+    xfix_add_icon_from_imlib(&display, &window);
+    imlib_free_image();
+    xfix_update(&display);
+
+    Imlib_Image image = imlib_load_image("/home/niklas/Pictures/memes/rangfolge.JPG");
+    imlib_context_set_image(image);
+    //Needed for rgba windows
+    imlib_image_set_has_alpha(1);
+    imlib_render_image_on_drawable_at_size(1500, 1000, 600, 450);
+    imlib_free_image();
+    msleep(5000);
     xfix_free_window(&display, &window);
     xfix_free_display(&display);
     return 0;
